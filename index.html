@@ -1,252 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Michael Joshua C. Chua | MJC Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-home: linear-gradient(180deg, #d32f2f 0%, #ffffff 100%);
-            --bg-about: linear-gradient(180deg, #fbc02d 0%, #ffffff 100%);
-            --bg-standard: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-            --bg-contact: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
-            --accent: #2563eb;
-            --text: #1e293b;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael Joshua C. Chua | MJC Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg-home: linear-gradient(180deg, #d32f2f 0%, #ffffff 100%);
+    --bg-about: linear-gradient(180deg, #fbc02d 0%, #ffffff 100%);
+    --bg-standard: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    --bg-contact: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+    --accent: #2563eb;
+    --text: #1e293b;
+}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+* { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    width: 100%;
+    color: var(--text);
+    background: var(--bg-home);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        body, html {
-            height: 100vh; width: 100vw;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-home);
-            overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text);
-        }
+/* --- NAVIGATION --- */
+nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    display: flex; justify-content: flex-end; padding: 20px 50px;
+    background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+}
+.nav-links { display: flex; gap: 25px; }
+.nav-links a { 
+    text-decoration: none; color: inherit; font-weight: 800; font-size: 0.8rem;
+    text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; opacity: 0.5;
+}
+.nav-links a:hover, .nav-links a.active-link { opacity: 1; color: var(--accent); transform: translateY(-2px); }
 
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            display: flex; justify-content: flex-end; padding: 35px 80px;
-            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px);
-        }
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a { 
-            text-decoration: none; color: inherit; font-weight: 800; font-size: 0.75rem;
-            text-transform: uppercase; letter-spacing: 2px; cursor: pointer; opacity: 0.5;
-        }
-        .nav-links a:hover, .nav-links a.active-link { opacity: 1; color: var(--accent); transform: translateY(-2px); }
+/* --- EDGE TRIGGERS --- */
+.edge-trigger {
+    position: fixed; top: 0; height: 100%; width: 10vw;
+    z-index: 900; opacity: 0; pointer-events: none;
+}
+.edge-trigger.enabled { pointer-events: auto; }
+.edge-left { left: 0; cursor: w-resize; }
+.edge-right { right: 0; cursor: e-resize; }
 
-        /* --- SWIPE TRIGGER ZONES --- */
-        .edge-trigger {
-            position: fixed; top: 0; height: 100%; width: 10vw;
-            z-index: 900; opacity: 0; pointer-events: none;
-        }
-        .edge-trigger.enabled { pointer-events: auto; }
-        .edge-left { left: 0; cursor: w-resize; }
-        .edge-right { right: 0; cursor: e-resize; }
+/* --- CONTENT STAGES --- */
+.stage { 
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    padding: 100px 5% 50px; width: 100%;
+    text-align: center;
+}
+.active { display: flex; animation: fxSlideIn 0.7s forwards; }
+@keyframes fxSlideIn {
+    from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
 
-        /* --- CONTENT STAGES --- */
-        .stage { 
-            position: absolute; inset: 0; display: none;
-            padding: 120px 8% 60px; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
-            overflow-y: auto;
-        }
-        .active { display: flex; animation: fxSlideIn 0.7s forwards; }
+/* --- HOME --- */
+#home h1 { font-family:'Syncopate'; font-size: 8vw; color: white; line-height: 1; }
+#home p { color: white; letter-spacing: 5px; margin-top: 15px; font-weight: 300; }
 
-        @keyframes fxSlideIn {
-            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
+/* --- BUTTON --- */
+.btn-call {
+    background: #000; color: #fff; padding: 15px 50px; border-radius: 100px;
+    font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+    cursor: pointer; border: none; text-decoration: none; display: inline-block;
+}
+.btn-call:hover { transform: scale(1.05); background: var(--accent); }
 
-        /* --- ABOUT ME CARD --- */
-        .profile-card {
-            background: white; padding: 60px; border-radius: 40px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);
-            max-width: 1100px; width: 100%; display: flex; align-items: center; gap: 50px; text-align: left;
-        }
-        .profile-img { 
-            width: 300px; height: 380px; border-radius: 25px; 
-            object-fit: cover; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            background: #f0f0f0;
-        }
+/* --- PROFILE CARD --- */
+.profile-card {
+    background: white; padding: 40px; border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.05);
+    max-width: 1100px; width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 30px; text-align: left;
+}
+.profile-img { 
+    width: 100%; max-width: 300px; height: auto; border-radius: 20px; 
+    object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    background: #f0f0f0;
+}
 
-        /* --- BENTO GRIDS --- */
-        .grid-container { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 15px; width: 100%; max-width: 1300px; padding: 20px 0;
-        }
-        .bento-card { 
-            background: white; padding: 30px; border-radius: 25px; 
-            border: 1px solid #f1f5f9; text-align: left; cursor: pointer;
-        }
-        .bento-card:hover { 
-            transform: translateY(-8px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
-        }
-        .bento-card h3 { font-family: 'Syncopate'; font-size: 0.75rem; margin-bottom: 8px; color: var(--accent); }
-        .bento-card p { font-size: 0.9rem; opacity: 0.8; }
+/* --- BENTO GRID --- */
+.grid-container { 
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 15px; width: 100%; max-width: 1300px; margin-top: 20px;
+}
+.bento-card { 
+    background: white; padding: 25px; border-radius: 20px; 
+    border: 1px solid #f1f5f9; text-align: left; cursor: pointer;
+}
+.bento-card:hover { 
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    box-shadow: 0 15px 35px rgba(37, 99, 235, 0.1);
+}
+.bento-card h3 { font-family: 'Syncopate'; font-size: 0.9rem; margin-bottom: 8px; color: var(--accent); }
+.bento-card p { font-size: 0.85rem; opacity: 0.8; }
 
-        .sys-img { width: 100%; height: 160px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; border: 1px solid #eee; }
+.sys-img { width: 100%; height: 160px; object-fit: cover; border-radius: 15px; margin-bottom: 10px; border: 1px solid #eee; }
 
-        .btn-call {
-            background: #000; color: #fff; padding: 22px 60px; border-radius: 100px;
-            font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer; border: none; text-decoration: none; display: inline-block;
-        }
-        .btn-call:hover { transform: scale(1.05); background: var(--accent); }
-    </style>
+/* --- RESPONSIVE --- */
+@media screen and (max-width: 768px) {
+    .profile-card { flex-direction: column; padding: 25px; }
+    nav { padding: 15px 20px; }
+}
+</style>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-links">
-            <a onclick="navTo(0)" id="link-0" class="active-link">Home</a>
-            <a onclick="navTo(1)" id="link-1">About</a>
-            <a onclick="navTo(2)" id="link-2">Tools</a>
-            <a onclick="navTo(3)" id="link-3">Skills</a>
-            <a onclick="navTo(4)" id="link-4">Systems</a>
-            <a onclick="navTo(5)" id="link-5">Contact</a>
-        </div>
-    </nav>
+<nav>
+    <div class="nav-links">
+        <a onclick="navTo(0)" id="link-0" class="active-link">Home</a>
+        <a onclick="navTo(1)" id="link-1">About</a>
+        <a onclick="navTo(2)" id="link-2">Tools</a>
+        <a onclick="navTo(3)" id="link-3">Skills</a>
+        <a onclick="navTo(4)" id="link-4">Systems</a>
+        <a onclick="navTo(5)" id="link-5">Contact</a>
+    </div>
+</nav>
 
-    <div class="edge-trigger edge-left" id="el" onmouseover="prev()"></div>
-    <div class="edge-trigger edge-right" id="er" onmouseover="next()"></div>
+<div class="edge-trigger edge-left" id="el" onmouseover="prev()"></div>
+<div class="edge-trigger edge-right" id="er" onmouseover="next()"></div>
 
-    <section id="home" class="stage active">
-        <h1 style="font-family:'Syncopate'; font-size: 6vw; color: white; line-height: 1;">MICHAEL<br>JOSHUA CHUA</h1>
-        <p style="color: white; letter-spacing: 10px; margin-top: 20px; font-weight: 300;">MJC // SYSTEM ARCHITECT</p>
-        <div style="margin-top: 50px;">
-            <a class="btn-call" onclick="navTo(1)">Enter Portfolio</a>
-        </div>
-    </section>
+<section id="home" class="stage active">
+    <h1>MICHAEL<br>JOSHUA CHUA</h1>
+    <p>MJC // SYSTEM ARCHITECT</p>
+    <div style="margin-top: 30px;">
+        <a class="btn-call" onclick="navTo(1)">Enter Portfolio</a>
+    </div>
+</section>
 
-   <section id="about" class="stage">
+<section id="about" class="stage">
     <div class="profile-card">
         <img class="profile-img" src="ME.jpg" 
              onerror="this.src='ME.png'; this.onerror=function(){this.src='https://ui-avatars.com/api/?name=Michael+Chua&background=000&color=fff&size=500'}">
         <div>
-            <p style="font-weight: 800; color: var(--accent); letter-spacing: 4px; margin-bottom: 10px;">CORE NARRATIVE</p>
-            <h2 style="font-family:'Syncopate'; font-size: 1.8rem; margin-bottom: 20px;">ASPIRING VA/DATA ANALYST SPECIALIST</h2>
-            
-            <p style="font-size: 1rem; line-height: 1.7; opacity: 0.8; margin-bottom: 15px;">
-               As a <b>Computer Science student</b>, I have a strong passion for technology and enjoy building systems, automating processes, and creating structured workflows that solve real-world problems efficiently. I love turning ideas into practical solutions that help people and organizations work smarter.
+            <p style="font-weight: 800; color: var(--accent); letter-spacing: 2px; margin-bottom: 10px;">CORE NARRATIVE</p>
+            <h2 style="font-family:'Syncopate'; font-size: 1.5rem; margin-bottom: 15px;">ASPIRING VA/DATA ANALYST SPECIALIST</h2>
+            <p style="line-height: 1.6; opacity: 0.8; margin-bottom: 10px;">
+               As a <b>Computer Science student</b>, I enjoy building systems, automating processes, and creating workflows that solve real-world problems efficiently.
             </p>
-
-            <p style="font-size: 1rem; line-height: 1.7; opacity: 0.8; font-weight: 400;">
-    My experience as a <b>Customer Service Representative</b> taught me how to communicate clearly, solve problems under pressure, and maintain accurate records. Combined with my leadership roles as <b>Vice President for Internal Affairs and one of the Head of SPCF Fair Committee (2025–2026)</b>, I have developed the skills to manage data, coordinate teams, and maintain organized systems. I am driven to work for my family and secure a stable future, and I am now pursuing opportunities as an <b>aspiring Virtual Assistant and Data Analyst Specialist</b>, focused on providing reliable support and building efficient, automated systems.
-</p>
+            <p style="line-height: 1.6; opacity: 0.8;">
+               My experience as a <b>Customer Service Representative</b> taught me communication and problem-solving. Combined with my leadership roles as <b>Vice President & Head of SPCF Fair Committee (2025–2026)</b>, I developed skills to manage data, coordinate teams, and maintain organized systems. I aim to provide reliable support as an aspiring Virtual Assistant and Data Analyst Specialist.
+            </p>
         </div>
     </div>
 </section>
 
-    <section id="tools" class="stage">
-        <h2 style="font-family:'Syncopate'; font-size: 1.3rem; margin-bottom: 30px; letter-spacing: 6px;">TECHNICAL TOOLBOX</h2>
-        <div class="grid-container">
-            <div class="bento-card"><h3>Google Sheets</h3><p>Relational Logic</p></div>
-            <div class="bento-card"><h3>MS Excel</h3><p>Power Query & Cleaning</p></div>
-            <div class="bento-card"><h3>Notion</h3><p>Knowledge Management</p></div>
-            <div class="bento-card"><h3>Apps Script</h3><p>JS-Based Automation</p></div>
-            <div class="bento-card"><h3>VS Code</h3><p>Development Hub</p></div>
-            <div class="bento-card"><h3>Canva</h3><p>System UI Prototyping</p></div>
-            <div class="bento-card"><h3>Power BI</h3><p>Data Visualization</p></div>
-            <div class="bento-card"><h3>Zapier</h3><p>Workflow Integration</p></div>
-            <div class="bento-card"><h3>Slack API</h3><p>Notification Bots</p></div>
-            <div class="bento-card"><h3>Trello</h3><p>Agile Project Ops</p></div>
-            <div class="bento-card"><h3>Google Forms</h3><p>Front-end Data Entry</p></div>
+<section id="tools" class="stage">
+    <h2 style="font-family:'Syncopate'; font-size: 1.3rem; letter-spacing: 3px;">TECHNICAL TOOLBOX</h2>
+    <div class="grid-container">
+        <div class="bento-card"><h3>Google Sheets</h3><p>Relational Logic</p></div>
+        <div class="bento-card"><h3>MS Excel</h3><p>Power Query & Cleaning</p></div>
+        <div class="bento-card"><h3>Notion</h3><p>Knowledge Management</p></div>
+        <div class="bento-card"><h3>Apps Script</h3><p>JS-Based Automation</p></div>
+        <div class="bento-card"><h3>VS Code</h3><p>Development Hub</p></div>
+        <div class="bento-card"><h3>Canva</h3><p>UI Prototyping</p></div>
+        <div class="bento-card"><h3>Power BI</h3><p>Data Visualization</p></div>
+    </div>
+</section>
+
+<section id="skills" class="stage">
+    <h2 style="font-family:'Syncopate'; font-size: 1.3rem; letter-spacing: 3px;">CORE COMPETENCIES</h2>
+    <div class="grid-container">
+        <div class="bento-card"><h3>Data Architecture</h3><p>Designing Scalable Flows</p></div>
+        <div class="bento-card"><h3>Logistics Command</h3><p>Operational Oversight</p></div>
+        <div class="bento-card"><h3>Crisis Mitigation</h3><p>Technical Problem Solving</p></div>
+    </div>
+</section>
+
+<section id="projects" class="stage">
+    <h2 style="font-family:'Syncopate'; font-size: 1.5rem;">TICKET TRACKING SYSTEM</h2>
+    <p style="margin-bottom: 20px; opacity: 0.7;">Multi-stakeholder Input Tracking Architecture</p>
+    <div class="grid-container">
+        <div class="bento-card">
+            <img src="STUDENTS.PNG" class="sys-img" onerror="this.style.background='#eee'">
+            <h3>Student Module</h3><p>Tracking input tickets for the student body.</p>
         </div>
-    </section>
-
-    <section id="skills" class="stage">
-        <h2 style="font-family:'Syncopate'; font-size: 1.3rem; margin-bottom: 30px; letter-spacing: 6px;">CORE COMPETENCIES</h2>
-        <div class="grid-container">
-            <div class="bento-card"><h3>Data Architecture</h3><p>Designing Scalable Flows</p></div>
-            <div class="bento-card"><h3>Logistics Command</h3><p>Operational Oversight</p></div>
-            <div class="bento-card"><h3>Crisis Mitigation</h3><p>Technical Problem Solving</p></div>
-            <div class="bento-card"><h3>Digital Governance</h3><p>Standardizing Procedures</p></div>
-            <div class="bento-card"><h3>Relational Mapping</h3><p>Cross-Platform Sync</p></div>
-            <div class="bento-card"><h3>SOP Creation</h3><p>Documenting Workflows</p></div>
-            <div class="bento-card"><h3>Database Normalization</h3><p>Ensuring Data Integrity</p></div>
-            <div class="bento-card"><h3>User Experience Design</h3><p>Friendly System Interfaces</p></div>
-            <div class="bento-card"><h3>Automated Reporting</h3><p>Self-Updating Analytics</p></div>
-            <div class="bento-card"><h3>Resource Allocation</h3><p>Optimizing Team Tools</p></div>
-            <div class="bento-card"><h3>Strategic Liaison</h3><p>Bridge Between Tech & Ops</p></div>
+        <div class="bento-card">
+            <img src="ALUMNI.PNG" class="sys-img" onerror="this.style.background='#eee'">
+            <h3>Alumni Module</h3><p>Logging and archiving graduate entries.</p>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="projects" class="stage">
-        <h2 style="font-family:'Syncopate'; font-size: 1.6rem; margin-bottom: 5px; letter-spacing: 6px;">TICKET TRACKING SYSTEM</h2>
-        <p style="margin-bottom: 35px; opacity: 0.6; font-size: 0.9rem;">Multi-stakeholder Input Tracking Architecture</p>
-        <div class="grid-container">
-            <div class="bento-card">
-                <img src="STUDENTS.PNG" class="sys-img" onerror="this.style.background='#eee'">
-                <h3>Student Module</h3><p>Tracking input tickets for the student body.</p>
-            </div>
-            <div class="bento-card">
-                <img src="ALUMNI.PNG" class="sys-img" onerror="this.style.background='#eee'">
-                <h3>Alumni Module</h3><p>Logging and archiving graduate entries.</p>
-            </div>
-            <div class="bento-card">
-                <img src="EMPLOYEE.PNG" class="sys-img" onerror="this.style.background='#eee'">
-                <h3>Employee Module</h3><p>Internal tracking for institutional faculty.</p>
-            </div>
-            <div class="bento-card">
-                <img src="OUTSIDER.PNG" class="sys-img" onerror="this.style.background='#eee'">
-                <h3>Outsider Module</h3><p>Visitor monitoring and security tracking.</p>
-            </div>
-        </div>
-    </section>
+<section id="contact" class="stage">
+    <h1 style="font-family:'Syncopate'; font-size: 5vw; color: white;">CONNECT<br>FOR SYNC.</h1>
+    <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="mailto:mchua3817@gmail.com" class="btn-call">Direct Email</a>
+        <a href="https://linkedin.com" target="_blank" class="btn-call" style="background:white; color:black;">LinkedIn</a>
+    </div>
+</section>
 
-    <section id="contact" class="stage">
-        <h1 style="font-family:'Syncopate'; font-size: 4.5vw; color: white; line-height: 1.1;">CONNECT<br>FOR SYNC.</h1>
-        <div style="margin-top: 50px; display: flex; gap: 20px;">
-            <a href="mailto:mchua3817@gmail.com" class="btn-call">Direct Email</a>
-            <a href="https://linkedin.com" target="_blank" class="btn-call" style="background:white; color:black;">LinkedIn</a>
-        </div>
-    </section>
+<script>
+let currentIdx = 0;
+const bgs = ['var(--bg-home)','var(--bg-about)','var(--bg-standard)','var(--bg-standard)','var(--bg-standard)','var(--bg-contact)'];
 
-    <script>
-        let currentIdx = 0;
-        const bgs = ['var(--bg-home)', 'var(--bg-about)', 'var(--bg-standard)', 'var(--bg-standard)', 'var(--bg-standard)', 'var(--bg-contact)'];
+function navTo(idx){
+    currentIdx = idx;
+    document.body.style.background = bgs[currentIdx];
+    document.querySelectorAll('.stage').forEach((s,i)=>s.classList.remove('active'));
+    document.querySelectorAll('.stage')[idx].classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach((a,i)=>a.classList.remove('active-link'));
+    document.getElementById('link-'+idx).classList.add('active-link');
 
-        function navTo(idx) {
-            currentIdx = idx;
-            document.body.style.background = bgs[currentIdx];
-            document.querySelectorAll('.stage').forEach((s, i) => {
-                s.classList.remove('active');
-                if(i === currentIdx) s.classList.add('active');
-            });
-            document.querySelectorAll('.nav-links a').forEach((a, i) => {
-                a.classList.remove('active-link');
-                if(i === currentIdx) a.classList.add('active-link');
-            });
-            
-            const el = document.getElementById('el');
-            const er = document.getElementById('er');
-            if (currentIdx === 0) {
-                el.classList.remove('enabled');
-                er.classList.remove('enabled');
-            } else {
-                el.classList.add('enabled');
-                er.classList.add('enabled');
-            }
-        }
+    const el = document.getElementById('el');
+    const er = document.getElementById('er');
+    if(currentIdx === 0){ el.classList.remove('enabled'); er.classList.remove('enabled'); }
+    else{ el.classList.add('enabled'); er.classList.add('enabled'); }
+}
 
-        function next() {
-            let nextIdx = (currentIdx + 1) % 6;
-            if (nextIdx === 0) nextIdx = 1;
-            navTo(nextIdx);
-        }
+function next(){ navTo((currentIdx + 1) % 6 === 0 ? 1 : (currentIdx + 1) % 6); }
+function prev(){ navTo((currentIdx - 1 + 6) % 6 === 0 ? 5 : (currentIdx - 1 + 6) % 6); }
+</script>
 
-        function prev() {
-            let prevIdx = (currentIdx - 1 + 6) % 6;
-            if (prevIdx === 0) prevIdx = 5;
-            navTo(prevIdx);
-        }
-    </script>
 </body>
 </html>
